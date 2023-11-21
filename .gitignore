@@ -5,3 +5,9 @@ vendor
 secret.json
 service-acc-key.json
 sheetId.json
+dev.log
+
+#hiddenfiles
+.buildpath
+.settings
+.project
