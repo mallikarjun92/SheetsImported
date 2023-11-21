@@ -1,0 +1,7 @@
+#directories
+vendor
+
+#files
+secret.json
+service-acc-key.json
+sheetId.json

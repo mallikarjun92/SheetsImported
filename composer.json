@@ -1,0 +1,14 @@
+{
+    "name": "malli/sheet-importer",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Mallikarjun",
+            "email": "mallikarjun016.rymec@gmail.com"
+        }
+    ],
+    "require": {
+        "google/apiclient": "^2.5",
+        "guzzlehttp/guzzle": "6.0"
+    }
+}
