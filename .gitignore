@@ -1,13 +1,18 @@
 #directories
 vendor
+csv
 
 #files
 secret.json
 service-acc-key.json
 sheetId.json
 dev.log
+index1.html
 
 #hiddenfiles
 .buildpath
 .settings
 .project
+
+#files with specific ext
+*.pdf

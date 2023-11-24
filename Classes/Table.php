@@ -21,7 +21,8 @@ class Table
     }
     
     // Table names stored as constants
-    const IMPORTED_CSV_TABLE = 'imported_csv_data';
+    const IMPORTED_SPREADSHEETS = 'imported_spreadsheets';
+    const SHEET_IDS = 'sheet_ids';
     
     public function getTableName()
     {
@@ -40,8 +41,6 @@ class Table
     // Create the specified table if it does not exist
     public function createTable($tableDefinition) {
         $sql = "CREATE TABLE IF NOT EXISTS {$this->tableName} ($tableDefinition)";
-        
-//         print_r($sql);exit;
         
         try {
             $this->pdo->exec($sql);
