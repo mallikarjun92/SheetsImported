@@ -70,13 +70,8 @@ function importSpreadSheetData($sheets, $service, $spreadsheetId, $table, $skipS
         if(in_array($sheet->getProperties()->getTitle(), $skipSheets)) {
             continue;
         }
-
-        // echo 'Sheet Title: ' . $sheet->getProperties()->getTitle() . "\n";
-        // echo 'Sheet ID: ' . $sheet->getProperties()->getSheetId() . "\n";
-        // echo 'Grid Properties: ' . json_encode($sheet->getProperties()->getGridProperties()) . "\n";
-        // Add more information as needed
-        // echo "----------------------\n";
         
+        // sets range from where to read values from in a sheet
         $range = "{$sheet->getProperties()->getTitle()}!A2:I";
         
         $response = @$service->spreadsheets_values->get($spreadsheetId, $range);
@@ -85,7 +80,6 @@ function importSpreadSheetData($sheets, $service, $spreadsheetId, $table, $skipS
 
         if(count($values)) {
             $chunks = array_chunk($values, 100);
-
             $rowCount = 0;
             $count = 0;
             foreach($chunks as $chunk) {
