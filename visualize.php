@@ -42,6 +42,16 @@
             text-anchor: end;
         }
 
+        /* .tooltip {
+            position: absolute;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            padding: 8px;
+            border-radius: 5px;
+            pointer-events: none;
+            opacity: 0;
+        } */
+
         .tooltip {
             position: absolute;
             background-color: #f9f9f9;
@@ -51,14 +61,14 @@
             pointer-events: none;
             opacity: 0;
             /* Adjust position to top right */
-            top: 10px;
-            right: 10px;
+            top: 150px;
+            right: 350px;
             color: darkorange;
         }
+
     </style>
 </head>
 <body>
-<br>
 <br>
 <?php include_once './sections/navBtns.php' ?>
 <br>
@@ -70,14 +80,6 @@
 </div>
 
 <script>
-// Sample data
-// var data = [
-//     { label: 'Category A', value: 30 },
-//     { label: 'Category B', value: 50 },
-//     { label: 'Category C', value: 20 },
-//     // Add more data as needed
-// ];
-
 // Fetch data from PHP endpoint
 d3.json('data.php?query=all')
     .then(function(data) {
@@ -118,9 +120,8 @@ d3.json('data.php?query=all')
                 // console.log(d);
                 tooltip.style("opacity", 1);
                 tooltip.html("Total " + d.call_status + " : " + d.count)
-                    .style("left", "auto")
-                    .style("right", "400px")
-                    .style("top", "10px");
+                    .style("left", (d3.event.pageX - margin.left) + "px")
+                    .style("top", (d3.event.pageY - margin.top - 20) + "px");
             })
             .on("mouseout", function(d) {
                 tooltip.style("opacity", 0);
