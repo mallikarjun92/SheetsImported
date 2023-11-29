@@ -8,6 +8,9 @@ service-acc-key.json
 sheetId.json
 dev.log
 index1.html
+test1.php
+test2.html
+testLog.log
 
 #hiddenfiles
 .buildpath

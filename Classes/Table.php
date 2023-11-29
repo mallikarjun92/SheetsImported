@@ -241,7 +241,7 @@ class Table
         $safeTargetColumn = trim($safeTargetColumn, "'");
         
         $sql = "SELECT $safeTargetColumn FROM {$this->tableName} WHERE $whereClause";
-        
+        // print_r($sql);exit;
         try {
             $stmt = $this->pdo->query($sql);
             $result = $stmt->fetch(PDO::FETCH_ASSOC);

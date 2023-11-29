@@ -81,16 +81,25 @@ class CSVImporter
     {
         $dataToInsert = [];
         foreach ($batch as $dataSet) {
-            if(!$importTable->findColumnByReference(['sheetId' => $dataSet[1]], 'sheetId'))  {
+            $existingSheetId = $importTable->findColumnByReference(['sheetId' => $dataSet[1]], 'sheetId');
+            // print_r(var_dump($existingSheetId));
+            if(!$existingSheetId)  {
                 $dataToInsert[] = [
                     'name' => $dataSet[0],
                     'sheetId' => $dataSet[1],
                     'haveAccess' => strtolower($dataSet[2]) == 'yes',
-                    'skipSheets' => $this->convertToJSON($dataSet[3])
+                    'readSheets' => $this->convertToJSON($dataSet[3])
                 ];
             }
-            else
+            else {
                 $this->logger->logMessage("{$dataSet[1]} already exists!");
+                $importTable->updateRecord([
+                    'name' => $dataSet[0],
+                    'sheetId' => $dataSet[1],
+                    'haveAccess' => strtolower($dataSet[2]) == 'yes',
+                    'readSheets' => $this->convertToJSON($dataSet[3])
+                ],['sheetId' => $existingSheetId]);
+            }
         }
         
         if(count($dataToInsert)) {
@@ -124,7 +133,7 @@ class CSVImporter
 
     public function createImpTable(Table $importTable)
     {
-        return $importTable->createTable('id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), sheetId VARCHAR(255), haveAccess TINYINT(1), skipSheets JSON');
+        return $importTable->createTable('id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), sheetId VARCHAR(255), haveAccess TINYINT(1), readSheets JSON');
     }
 }
 
