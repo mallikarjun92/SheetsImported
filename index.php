@@ -7,6 +7,10 @@ require_once(__DIR__ . '/sections/head.php');
 
 <div class="container-fluid">
     <br><br><br>
+    
+    <!-- buttons to navigate to run background tasks -->
+    <?php include_once ('./sections/navBtns.php') ?>
+    <br>
     <div class="row">
         <div class="col-md-3">&nbsp;</div>
         <div class="col-md-6">

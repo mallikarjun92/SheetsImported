@@ -1,0 +1,38 @@
+.navBtns {
+    background-color: #333;
+    padding: 10px 0;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.col-md-6 {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.nav-button {
+    display: block;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007BFF;
+    border: 1px solid #007BFF;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.nav-button:hover {
+    background-color: #0056b3;
+}
+
+/* Add some margin to the buttons for spacing */
+.nav-button + .nav-button {
+    margin-left: 10px;
+}

@@ -58,6 +58,10 @@
     </style>
 </head>
 <body>
+<br>
+<br>
+<?php include_once './sections/navBtns.php' ?>
+<br>
 
 <div id="dashboard">
     <h1>Call Status Dashboard</h1>

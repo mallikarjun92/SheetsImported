@@ -6,6 +6,8 @@
     <title>Periodic AJAX Call</title>
 </head>
 <body>
+    <br>
+    <?php include_once './sections/navBtns.php' ?>
     <h1>Run Periodic AJAX Call</h1>
 
     <button onclick="startAjaxCall()">Start AJAX Call</button>
