@@ -1,6 +1,7 @@
 #directories
 vendor
 csv
+backup
 
 #files
 secret.json
@@ -10,7 +11,7 @@ dev.log
 index1.html
 test1.php
 test2.html
-testLog.log
+importspreadsheetdata-0b28a4e31265.json
 
 #hiddenfiles
 .buildpath
@@ -19,3 +20,4 @@ testLog.log
 
 #files with specific ext
 *.pdf
+*.log

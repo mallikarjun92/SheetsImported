@@ -39,9 +39,10 @@ if(!$table->tableExists()) {
     
     if($created)
         echo "created table";
-    else 
-        echo "Table exists already!";
+    
 }
+else 
+    echo "{$table->getTableName()} Table exists already!";
 
 if(count($spreadSheetLinks)) {
     foreach ($spreadSheetLinks as $spreadSheetLink) {
@@ -63,6 +64,8 @@ if(count($spreadSheetLinks)) {
             }
         }
     }
+    
+    echo "Script executed at: " . date('Y-m-d H:i:s');
 } else {
     echo "0 sheet_ids";
 }
@@ -96,51 +99,52 @@ function importSpreadSheetData($sheets, $service, $spreadsheetId, Table $table, 
                         $rowCount += 1;
 
                         // $time = new DateTime();
-
-                        $date = DateTime::createFromFormat('d-M-Y', $row[0]);
-                        if($date != false) {
-                            $existingRecord = [];
-                            $dateStr = $date->format('Y-m-d');
-                            
-                            if(isset($row[7])) {
-                                $existingRecord = $table->selectRecordWhere([
-                                    'date' => $dateStr,
-                                    'source' => $row[1],
-                                    'mobile_no' => $row[4],
-                                    // 'call_status' => $row[7],
-                                    'counsellor' => $row[2]
-                                ]);
+                        if(isset($row[0])) {
+                            $date = DateTime::createFromFormat('d-M-Y', $row[0]);
+                            if($date != false) {
+                                $existingRecord = [];
+                                $dateStr = $date->format('Y-m-d');
                                 
-                                if(!$existingRecord) {
-                                    $data[] = [
+                                if(isset($row[7])) {
+                                    $existingRecord = $table->selectRecordWhere([
                                         'date' => $dateStr,
                                         'source' => $row[1],
-                                        'counsellor' => $row[2],
-                                        'name' => $row[3],
                                         'mobile_no' => $row[4],
-                                        'location' => isset($row[5]) ? $row[5] : null,
-                                        'course' => isset($row[6]) ? $row[6] : null,
-                                        'call_status' => $row[7],
-                                        'comments' => isset($row[8]) ? $row[8] : null,
-                                    ];
-                                } else {
-                                    if($existingRecord['call_status'] != $row[7]) {
-                                        $updated = $table->updateRecord([
+                                        // 'call_status' => $row[7],
+                                        'counsellor' => $row[2]
+                                    ]);
+                                    
+                                    if(!$existingRecord) {
+                                        $data[] = [
+                                            'date' => $dateStr,
+                                            'source' => $row[1],
+                                            'counsellor' => $row[2],
+                                            'name' => $row[3],
+                                            'mobile_no' => $row[4],
+                                            'location' => isset($row[5]) ? $row[5] : null,
+                                            'course' => isset($row[6]) ? $row[6] : null,
                                             'call_status' => $row[7],
                                             'comments' => isset($row[8]) ? $row[8] : null,
-                                            'updated' => $date->format('Y-m-d H:i:s')
-                                        ],[
-                                            'id' => $existingRecord['id']
-                                        ]);
-    
-                                        if($updated)
-                                            $updateCount +=1;
+                                        ];
+                                    } else {
+                                        if($existingRecord['call_status'] != $row[7]) {
+                                            $updated = $table->updateRecord([
+                                                'call_status' => $row[7],
+                                                'comments' => isset($row[8]) ? $row[8] : null,
+                                                'updated' => $date->format('Y-m-d H:i:s')
+                                            ],[
+                                                'id' => $existingRecord['id']
+                                            ]);
+        
+                                            if($updated)
+                                                $updateCount +=1;
+                                        }
                                     }
                                 }
+                            } else {
+                                //print_r("Invalid date format for value: " . var_dump($row[0]) . " at row {$rowCount} \n");
+                                $logger->logMessage("Invalid date format for value: " . json_encode(($row[0])) . " at row: {$rowCount}, sheetId: '$spreadsheetId' , sheet: {$sheet->getProperties()->getTitle()}");
                             }
-                        } else {
-                            print_r("Invalid date format for value: " . var_dump($row[0]) . " at row {$rowCount} \n");
-                            $logger->logMessage("Invalid date format for value: " . json_encode(var_dump($row[0])) . " at row: {$rowCount}, sheetId: '$spreadsheetId' , sheet: {$sheet->getProperties()->getTitle()}");
                         }
                     }
                     
@@ -155,7 +159,7 @@ function importSpreadSheetData($sheets, $service, $spreadsheetId, Table $table, 
 
             echo "Imported $count rows! \n";
             echo "Updated $updateCount rows! \n";
-            echo "Script executed at: " . date('Y-m-d H:i:s');
+            echo "in sheet: {$sheet->getProperties()->getTitle()} with sheetId $spreadsheetId \n";
         }
         
     }
