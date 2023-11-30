@@ -1,5 +1,5 @@
 <?php
-
+ini_set('max_execution_time', 10800);
 require_once 'autoload.php';
 // print_r('5');exit;
 
