@@ -18,7 +18,7 @@ class CSVImporter
         $this->logger = new Logger('dev.log');
     }
 
-    public function importCSV($csvFile, Table $importTable, $skipLines = 1, $batchSize = 25)
+    public function importCSV($csvFile, Table $importTable, $skipLines = 1, $batchSize = 100)
     {
         $handle = fopen($csvFile, 'r');
 

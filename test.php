@@ -1,5 +1,5 @@
 <?php
-ini_set('max_execution_time', 10800);
+ini_set('max_execution_time', 300);
 require_once 'autoload.php';
 // print_r('5');exit;
 
@@ -87,7 +87,7 @@ function importSpreadSheetData($sheets, $service, $spreadsheetId, Table $table, 
         $values = $response->getValues();
 
         if(count($values)) {
-            $chunks = array_chunk($values, 100);
+            $chunks = array_chunk($values, 1000);
             $rowCount = 0;
             $count = 0;
             $updateCount  = 0;
