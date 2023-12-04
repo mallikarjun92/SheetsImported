@@ -29,7 +29,7 @@
 
         function startAjaxCall() {
             makeAjaxCall(); // Initial call
-            ajaxInterval = setInterval(makeAjaxCall, 300000);
+            ajaxInterval = setInterval(makeAjaxCall, 2400000);
             console.log("AJAX calls started.");
         }
 
