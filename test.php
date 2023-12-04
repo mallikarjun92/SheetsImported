@@ -6,7 +6,6 @@ require_once 'autoload.php';
 use Classes\Database;
 use Classes\Table;
 use Classes\Logger;
-use Google\Service\Adsense\Row;
 
 // use Google_Client;
 // use Google_Service_Sheets;
@@ -87,7 +86,7 @@ function importSpreadSheetData($sheets, $service, $spreadsheetId, Table $table, 
         $values = $response->getValues();
 
         if(count($values)) {
-            $chunks = array_chunk($values, 1000);
+            $chunks = array_chunk($values, 100);
             $rowCount = 0;
             $count = 0;
             $updateCount  = 0;
